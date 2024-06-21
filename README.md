@@ -1,6 +1,6 @@
 # flat
 
-> [!INFO]
+> [!NOTE]
 > Originally forked to fix a bug where dot notation keys in a nested array were not unflattened,
 > see https://github.com/activeprospect/flat/commit/27b5bfaaab986028dd9d8bb8027d5dce2e5a874b.
 >
