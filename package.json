@@ -2,25 +2,20 @@
   "name": "@activeprospect/flat",
   "version": "5.0.4",
   "main": "index.js",
-  "bin": "cli.js",
+  "bin": {
+    "flat": "cli.js"
+  },
   "scripts": {
-    "test": "mocha -u tdd --reporter spec && standard index.js test/index.js"
+    "test": "node --test && standard cli.js index.js test/test.js"
   },
   "license": "BSD-3-Clause",
   "description": "Take a nested Javascript object and flatten it, or unflatten an object with delimited keys",
   "devDependencies": {
-    "mocha": "^8.3.0",
-    "standard": "^14.3.1"
-  },
-  "directories": {
-    "test": "test"
-  },
-  "dependencies": {
-    "is-buffer": "~2.0.4"
+    "standard": "^17.1.0"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/hughsk/flat.git"
+    "url": "git://github.com/activeprospect/flat.git"
   },
   "keywords": [
     "flat",
@@ -31,7 +26,7 @@
     "object",
     "nested"
   ],
-  "author": "Hugh Kennedy <hughskennedy@gmail.com> (http://hughskennedy.com)",
+  "author": "Hugh Kennedy <hughskennedy@gmail.com> (https://hughsk.io)",
   "bugs": {
     "url": "https://github.com/hughsk/flat/issues"
   },

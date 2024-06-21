@@ -1,4 +1,12 @@
-# flat [![Build Status](https://secure.travis-ci.org/hughsk/flat.png?branch=master)](http://travis-ci.org/hughsk/flat)
+# flat
+
+> [!NOTE]
+> Originally forked to fix a bug where dot notation keys in a nested array were not unflattened,
+> see https://github.com/activeprospect/flat/commit/27b5bfaaab986028dd9d8bb8027d5dce2e5a874b.
+>
+> Fork is maintained because LeadConduit is not set up to easily consume ES modules, and the
+> upstream package only ships an ESM package. This lib contains equivalent code, but maintains
+> a CommonJS file format for compatibility with all LeadConduit integrations and applications.
 
 Take a nested Javascript object and flatten it, or unflatten an object with
 delimited keys.
@@ -17,7 +25,7 @@ Flattens the object - it'll return an object one level deep, regardless of how
 nested the original object was:
 
 ``` javascript
-var flatten = require('flat')
+const { flatten } = require('flat')
 
 flatten({
     key1: {
@@ -38,10 +46,10 @@ flatten({
 
 ### unflatten(original, options)
 
-Flattening is reversible too, you can call `flatten.unflatten()` on an object:
+Flattening is reversible too, you can call `unflatten` on an object:
 
 ``` javascript
-var unflatten = require('flat').unflatten
+const { unflatten } = require('flat')
 
 unflatten({
     'three.levels.deep': 42,
@@ -71,7 +79,7 @@ Use a custom delimiter for (un)flattening your objects, instead of `.`.
 When enabled `flatten` will preserve arrays and their contents. This is disabled by default.
 
 ``` javascript
-var flatten = require('flat')
+const { flatten } = require('flat')
 
 flatten({
     this: [
@@ -121,7 +129,7 @@ When enabled, existing keys in the unflattened object may be overwritten if they
 ```javascript
 unflatten({
     'TRAVIS': 'true',
-    'TRAVIS_DIR': '/home/travis/build/kvz/environmental'
+    'TRAVIS.DIR': '/home/travis/build/kvz/environmental'
 }, { overwrite: true })
 
 // TRAVIS: {
@@ -139,7 +147,7 @@ This only makes sense on ordered arrays, and since we're overwriting data, shoul
 Maximum number of nested objects to flatten.
 
 ``` javascript
-var flatten = require('flat')
+const { flatten } = require('flat')
 
 flatten({
     key1: {
@@ -158,10 +166,57 @@ flatten({
 // }
 ```
 
+### transformKey
+
+Transform each part of a flat key before and after flattening.
+
+```javascript
+const { flatten, unflatten } = require('flat')
+
+flatten({
+    key1: {
+        keyA: 'valueI'
+    },
+    key2: {
+        keyB: 'valueII'
+    },
+    key3: { a: { b: { c: 2 } } }
+}, {
+    transformKey: function(key){
+      return '__' + key + '__';
+    }
+})
+
+// {
+//   '__key1__.__keyA__': 'valueI',
+//   '__key2__.__keyB__': 'valueII',
+//   '__key3__.__a__.__b__.__c__': 2
+// }
+
+unflatten({
+      '__key1__.__keyA__': 'valueI',
+      '__key2__.__keyB__': 'valueII',
+      '__key3__.__a__.__b__.__c__': 2
+}, {
+    transformKey: function(key){
+      return key.substring(2, key.length - 2)
+    }
+})
+
+// {
+//     key1: {
+//         keyA: 'valueI'
+//     },
+//     key2: {
+//         keyB: 'valueII'
+//     },
+//     key3: { a: { b: { c: 2 } } }
+// }
+```
+
 ## Command Line Usage
 
-`flat` is also available as a command line tool. You can run it with 
-[`npx`](https://ghub.io/npx):
+`flat` is also available as a command line tool. You can run it with [`npx`](https://docs.npmjs.com/cli/v8/commands/npx):
 
 ```sh
 npx flat foo.json
