@@ -4,7 +4,7 @@ const { readFileSync } = require('node:fs')
 const path = require('node:path')
 const { describe, test } = require('node:test')
 const { flatten, unflatten } = require('../index.js')
-const pkg = JSON.parse(readFileSync('./package.json'))
+const pkg = JSON.parse(readFileSync('./package.json').toString())
 
 const primitives = {
   String: 'good morning',

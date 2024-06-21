@@ -2,7 +2,9 @@
   "name": "@activeprospect/flat",
   "version": "5.0.4",
   "main": "index.js",
-  "bin": "cli.js",
+  "bin": {
+    "flat": "cli.js"
+  },
   "scripts": {
     "test": "node --test && standard cli.js index.js test/test.js"
   },

@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-import fs from 'node:fs'
-import path from 'node:path'
-import readline from 'node:readline'
-import { flatten } from './index.js'
+const fs = require('node:fs')
+const path = require('node:path')
+const readline = require('node:readline')
+const { flatten } = require('./index.js')
 
 const filepath = process.argv.slice(2)[0]
 if (filepath) {
